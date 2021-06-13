@@ -132,29 +132,8 @@ Author: Jan Hlaváč - based on the LaTeX language file though
       </include>
     </context>
 
-
-    <define-regex id="accents" extended="true">
-      (\\(                                      #leading backslash
-         (                                      #1-Accents-
-          [bcdHruv\.\^'`~"=]                    #  accent symbol
-          \s*\{([a-zA-Z] | \\i | \\j)\} |       #  letter (\i \j for i,j without dot)
-          [\.\^'`~"=]\s*([a-zA-Z] | \\i | \\j) |#  non-letter accents without braces
-          t\s*\{([a-zA-Z] | \\i | \\j){2}\}     #  special accent over two letters
-         ) | (                                  #2-Special letters-
-          (aa|AA | ae|AE | oe|OE | ss|SS |      #  letters followed by a non-word
-          [oO] | [lL])(?![a-zA-Z_@])            #  character or e.g. \l causes
-         )                                      #  unwanted behaviour (i.e. \label)
-        )) | (!` | \?`)                         #3-Spanish punctuation
-    </define-regex>
-
     <context id="special-char">
       <include>
-        <!-- Include accents here before the escaped command symbols because for
-             example the hat (^) can be used as an accent and will be placed over
-             the following letter (e.g. \^o will NOT produce ^o) -->
-        <context id="accents" style-ref="special-char" class="no-spell-check">
-          <match>\%{accents}</match>
-        </context>
 
         <context id="special-symbols" style-ref="special-char" class="no-spell-check" extend-parent="false">
           <prefix>\\</prefix>
@@ -164,7 +143,7 @@ Author: Jan Hlaváč - based on the LaTeX language file though
           <keyword>&amp;</keyword>
           <keyword>%</keyword>
           <keyword>#</keyword>
-          <keyword>_[^[:alpha:]]?$</keyword>
+          <keyword>_</keyword>
           <keyword>\{</keyword>
           <keyword>\}</keyword>
           <keyword>\^</keyword>
@@ -4207,10 +4186,10 @@ Author: Jan Hlaváč - based on the LaTeX language file though
         <context ref="math-brackets"/>
         <context ref="math-super-sub-script"/>
         <context ref="special-active"/>
-        <context ref="special-char"/>
         <context ref="plain-command"/>
         <context ref="op-command"/>
         <context ref="custom-command"/>
+        <context ref="special-char"/>
       </include>
     </context>
 
@@ -4250,11 +4229,11 @@ Author: Jan Hlaváč - based on the LaTeX language file though
         <context ref="math"/>
         <context ref="urls"/>
         <context ref="args"/>
-        <context ref="special-char"/>
         <context ref="special-active"/>
         <context ref="plain-command"/>
         <context ref="op-command"/>
         <context ref="custom-command"/>
+        <context ref="special-char"/>
       </include>
     </context>
   </definitions>
