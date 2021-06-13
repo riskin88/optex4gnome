@@ -167,7 +167,6 @@ Author: Jan Hlaváč - based on the LaTeX language file though
           <keyword>_[^[:alpha:]]?$</keyword>
           <keyword>\{</keyword>
           <keyword>\}</keyword>
-          <keyword>~</keyword>
           <keyword>\^</keyword>
           <keyword>\\</keyword>
         </context>
@@ -175,8 +174,9 @@ Author: Jan Hlaváč - based on the LaTeX language file though
     </context>
     
     <context id="special-active" style-ref="custom">
-      <match>[&amp;#~]</match>
+      <match>(&amp;|#|~|\\\ |\\,)</match>
     </context>
+    
     
     <context id="plain-command" style-ref="command" class="no-spell-check">
       <prefix>\\[_]?</prefix>
@@ -4181,13 +4181,14 @@ Author: Jan Hlaváč - based on the LaTeX language file though
 <keyword>accurrent</keyword>
 </context>
 
-    <context id="math-spacing" style-ref="special-char">
-      <match>\\[,>;!]</match>
+    
+    <context id="math-spacing" style-ref="custom">
+      <match>\\[>;!]</match>
     </context>
 
     <context id="math-brackets" style-ref="special-char">
       <match extended="true">
-        \\(left | right | middle | [bB]igg?[lr]?)  (      # bracket size specifier
+        \\(left | right | middle | [bB]igg?[lrm]?)  (      # bracket size specifier
           \(|\) | \[|\] | \\\{|\\\}         # normal brackets (curly escaped)
         )
       </match>
@@ -4204,8 +4205,9 @@ Author: Jan Hlaváč - based on the LaTeX language file though
         <context ref="math-object"/>
         <context ref="math-spacing"/>
         <context ref="math-brackets"/>
-        <context ref="special-char"/>
         <context ref="math-super-sub-script"/>
+        <context ref="special-active"/>
+        <context ref="special-char"/>
         <context ref="plain-command"/>
         <context ref="op-command"/>
         <context ref="custom-command"/>
